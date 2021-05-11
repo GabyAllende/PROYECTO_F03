@@ -1,0 +1,30 @@
+{
+  "cotizacion1": [
+    "SOCCER-001",
+    "MTR-64000001",
+    24,
+    1540,
+    true
+  ],
+  "cotizacion2": [
+    "BASKET-001",
+    "MTR-64000002",
+    17,
+    1740,
+    true
+  ],
+  "cotizacion3": [
+    "SOCCER-002",
+    "MTR-64000003",
+    36,
+    2030,
+    true
+  ],
+  "cotizacion4": [
+    "SOCCER-001",
+    "MTR-64000004",
+    24,
+    1540,
+    true
+  ]
+}
