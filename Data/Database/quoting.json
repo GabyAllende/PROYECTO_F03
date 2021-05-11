@@ -1,30 +1,58 @@
 {
-  "cotizacion1": [
-    "SOCCER-001",
-    "MTR-64000001",
-    24,
-    1540,
-    true
-  ],
-  "cotizacion2": [
-    "BASKET-001",
-    "MTR-64000002",
-    17,
-    1740,
-    true
-  ],
-  "cotizacion3": [
-    "SOCCER-002",
-    "MTR-64000003",
-    36,
-    2030,
-    true
-  ],
-  "cotizacion4": [
-    "SOCCER-001",
-    "MTR-64000004",
-    24,
-    1540,
-    true
-  ]
+    "cotizacion1": [
+        "SOCCER-001",
+        "MTR-64000001",
+        24,
+        1540,
+        true
+    ],
+    "cotizacion2": [
+        "BASKET-001",
+        "MTR-64000002",
+        17,
+        1740,
+        true
+    ],
+    "cotizacion3": [
+        "SOCCER-002",
+        "MTR-64000003",
+        36,
+        2030,
+        true
+    ],
+    "cotizacion4": [
+        "SOCCER-001",
+        "MTR-64000004",
+        24,
+        1540,
+        true
+    ],
+    "cotizacion5": [
+        "SOCCER-004",
+        "MTR-64000005",
+        35,
+        3000,
+        true
+    ],
+    "cotizacion6": [
+        "BASKET-003",
+        "MTR-64000006",
+        30,
+        4200,
+        true
+    ],
+    "cotizacion7": [
+        "BASKET-004",
+        "MTR-64000007",
+        10,
+        2000,
+        true
+    ],
+    "cotizacion8": [
+        "BASKET-001",
+        "MTR-64000008",
+        10,
+        1240,
+        true
+    ]
 }
