@@ -15,10 +15,10 @@ namespace PR_F02.Controllers
     public class QuotationsController : ControllerBase
     {
         private static IConfiguration _config;
-        private readonly IQuotationManager _quotationManager; 
+        private readonly IQuotationManager _quotationManager;
         private readonly ILogger<QuotationsController> _logger;
 
-        public QuotationsController(IConfiguration config,IQuotationManager quotationManager)
+        public QuotationsController(IConfiguration config, IQuotationManager quotationManager)
 
         {
             _config = config;
@@ -26,26 +26,44 @@ namespace PR_F02.Controllers
         }
 
         [HttpGet]
-        public List<Quotation> GetGroup()
+        public List<Quotation> GetAllQuotations()
         {
             return _quotationManager.GetAllQuotations();
         }
 
         [HttpPost]
-        public Quotation CreateGroup([FromBody] Quotation quo)//, [FromBody] string studentLastName ) 
+        public Quotation CreateQuotation([FromBody] Quotation quo)//, [FromBody] string studentLastName ) 
         {
             return _quotationManager.CreateQuotation(quo);
         }
         [HttpPut]
-        public Quotation UpdateGroup([FromBody] Quotation quo)
+        public Quotation UpdateQuotation([FromBody] Quotation quo)
         {
             return _quotationManager.UpdateQuotation(quo);
         }
 
         [HttpDelete]
-        public Quotation DeleteGroup([FromBody] Quotation quo)
+        public int DeleteQuotation([FromBody] int id)
         {
-            return _quotationManager.DeleteQuotation(quo);
+            return _quotationManager.DeleteQuotation(id);
+        }
+
+
+        [Route("{quotationId}/sell")]
+        [HttpPut]
+        
+        public Quotation UpdateSaleTrue([FromRoute] int quotationId)
+        {
+            Console.WriteLine(quotationId);
+            return _quotationManager.UpdateSaleTrue(quotationId);
+        }
+        [Route("{quotationId}/unsell")]
+        [HttpPut]
+        public Quotation UpdateSaleFalse([FromRoute] int quotationId)
+        {
+            Console.WriteLine(quotationId);
+            return _quotationManager.UpdateSaleFalse(quotationId);
         }
     }
+    
 }

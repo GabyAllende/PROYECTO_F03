@@ -13,9 +13,10 @@ namespace UPB.FinalProject.Logic.Models
             {
                 mappedQuotations.Add(new Quotation()
                 {
+                    Id = quo.Id,
                     CodProd = quo.CodProd,
                     CodClient = quo.CodClient,
-                    Stock = quo.Stock,
+                    Quantity = quo.Quantity,
                     Sale = quo.Sale,
                     Price = quo.Price
                 });
@@ -28,9 +29,10 @@ namespace UPB.FinalProject.Logic.Models
         {
             Quotation myLogicQuo = new Quotation()
             {
+                Id = quo.Id,
                 CodProd = quo.CodProd,
                 CodClient = quo.CodClient,
-                Stock = quo.Stock,
+                Quantity = quo.Quantity,
                 Sale = quo.Sale,
                 Price = quo.Price
             };
@@ -43,14 +45,18 @@ namespace UPB.FinalProject.Logic.Models
         {
             FinalProject.Data.Models.Quotation myDataQuo = new FinalProject.Data.Models.Quotation()
             {
+                Id = quo.Id,
                 CodProd = quo.CodProd,
                 CodClient = quo.CodClient,
-                Stock = quo.Stock,
+                Quantity = quo.Quantity,
                 Sale = quo.Sale,
                 Price = quo.Price
             };
 
             return myDataQuo;
         }
+
+
+
     }
 }

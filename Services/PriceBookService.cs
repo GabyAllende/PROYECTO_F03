@@ -9,15 +9,15 @@ namespace UPB.FinalProject.Services
 {
     public class PriceBookService : IPriceBookService
     {
-        public async Task<List<Price>> GetAllPrices()
+        public async Task<Book> GetAllPrices()
         {
-            List<Price> myPriceBook = new List<Price>();
+            Book myPriceBook = new Book();
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:5002");
             var response = await client.GetAsync("/api/prices");
 
             string respBody = await response.Content.ReadAsStringAsync();
-            myPriceBook = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Price>>(respBody);
+            myPriceBook = Newtonsoft.Json.JsonConvert.DeserializeObject<Book>(respBody);
 
 
             return myPriceBook;

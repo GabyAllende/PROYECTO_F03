@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using UPB.FinalProject.Data.Models;
+using UPB.FinalProject.Services.Models;
 
 namespace UPB.FinalProject.Data
 {
@@ -11,8 +12,11 @@ namespace UPB.FinalProject.Data
 
         public List<Quotation> GetAllQuotations();
 
-        public Quotation UpdateQuotation(Quotation quoToUpdate);
+        public Quotation UpdateQuotation(int id, string codProd, int quantity);
 
-        public Quotation DeleteQuotation(Quotation quoToDelete);
+        public int DeleteQuotation(int id);
+
+        public Quotation UpdateSaleTrue(int id);
+        public Quotation UpdateSaleFalse(int id);
     }
 }
