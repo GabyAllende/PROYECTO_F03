@@ -6,6 +6,7 @@ using UPB.FinalProject.Data;
 using UPB.FinalProject.Services;
 using UPB.FinalProject.Services.Models;
 using System.Linq;
+using Serilog;
 
 namespace UPB.FinalProject.Logic.Managers
 {
@@ -66,45 +67,54 @@ namespace UPB.FinalProject.Logic.Managers
 
         public List<Quotation> GetAllQuotations()
         {
-           
-            Book myBook = _priceBookService.GetAllPrices().Result;
-            List<Pricing> myPriceBook = myBook.Products;
-            List<Data.Models.Quotation> quotations = _dbContext.GetAllQuotations();
-            List<Quotation> quots = DTOMappers.MapQuotations(quotations);
-
-            Console.Out.WriteLine("=================LISTA DE PRECIOS: ====================");
-            foreach (var p in myPriceBook)
+            // Sona roja, tendremos problemas si no conseguimos la lista de precios. 
+            try
             {
-                Console.WriteLine($"Precio CodProd: {p.Code} SetPrice: {p.Price} PromotionPrice: {p.PromotionPrice}");
-            }
+                Book myBook = _priceBookService.GetAllPrices().Result;
+                List<Pricing> myPriceBook = myBook.Products;
+                List<Data.Models.Quotation> quotations = _dbContext.GetAllQuotations();
+                List<Quotation> quots = DTOMappers.MapQuotations(quotations);
 
-            Console.Out.WriteLine("==================LISTA DE COTIZACIONES===================");
-            foreach (var qu in quots)
-            {
-                Pricing precioProd = myPriceBook.Find(pr => pr.Code == qu.CodProd);
-                double miPrecio = 0;
-                if (precioProd != null)
+                Console.Out.WriteLine("=================LISTA DE PRECIOS: ====================");
+                foreach (var p in myPriceBook)
                 {
-                    if (precioProd.PromotionPrice == 0)
+                    Console.WriteLine($"Precio CodProd: {p.Code} SetPrice: {p.Price} PromotionPrice: {p.PromotionPrice}");
+                }
+
+                Console.Out.WriteLine("==================LISTA DE COTIZACIONES===================");
+                foreach (var qu in quots)
+                {
+                    Pricing precioProd = myPriceBook.Find(pr => pr.Code == qu.CodProd);
+                    double miPrecio = 0;
+                    if (precioProd != null)
                     {
-                        miPrecio = precioProd.Price;
+                        if (precioProd.PromotionPrice == 0)
+                        {
+                            miPrecio = precioProd.Price;
+                        }
+                        else
+                        {
+                            miPrecio = precioProd.PromotionPrice;
+                        }
                     }
                     else
                     {
-                        miPrecio = precioProd.PromotionPrice;
+                        Console.WriteLine($"NO SE ENCONTRO EL CODIGO: {qu.CodProd}");
                     }
-                }
-                else
-                {
-                    Console.WriteLine($"NO SE ENCONTRO EL CODIGO: {qu.CodProd}");
+
+                    qu.Price = miPrecio;
+                    Console.Out.WriteLine($"Id: {qu.Id} CodProd: {qu.CodProd} CodCliente: {qu.CodClient} Price: {qu.Price}");
                 }
 
-                qu.Price = miPrecio;
-                Console.Out.WriteLine($"Id: {qu.Id} CodProd: {qu.CodProd} CodCliente: {qu.CodClient} Price: {qu.Price}");
+
+                return quots;
             }
-
-            
-            return quots;
+            catch (Exception ex)
+            {
+                //Error si no conseguimos la lista de precios.
+                Log.Error("The error was: " + ex.StackTrace + ex.Message);
+                throw;
+            }
         }
 
         public Quotation UpdateQuotation(Quotation quo)

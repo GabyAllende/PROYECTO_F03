@@ -16,12 +16,12 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
 using UPB.FinalProject.Services;
+using Serilog;
 
 namespace PR_F02
 {
     public class Startup
     {
-
         private IConfiguration Configuration { get; }
         public Startup(Microsoft.AspNetCore.Hosting.IHostingEnvironment env)
         {
@@ -31,6 +31,13 @@ namespace PR_F02
                 .AddJsonFile($"appsettings.{env.EnvironmentName}.json")
                 .AddEnvironmentVariables();
             Configuration = builder.Build();
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel
+                .Information()
+                .WriteTo.File("c:/logsCerti/mylog-{Date}.log")
+                .CreateLogger();
+            Log.Information($"Estoy en el ambiente: {env.EnvironmentName}");
         }
 
        
