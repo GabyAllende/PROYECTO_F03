@@ -17,6 +17,11 @@ namespace UPB.FinalProject.Data
         {
             //============CHICOSS AQUI TIENE QUE ESTAR LA CONEXION CON LA BASE DE DATOS JSON==============
             //EL QuotationTable debe estar inicializado con los contenidos de la base de datos
+            //Ej
+            //var list = JsonConvert.DeserializeObject<List<Person>>(myJsonString);
+            //list.Add(new Person(1234, "carl2");
+            //var convertedJson = JsonConvert.SerializeObject(list, Formatting.Indented);
+            //https://stackoverflow.com/questions/33081102/json-add-new-object-to-existing-json-file-c-sharp/33081258
 
 
             QuotationTable = new List<Quotation>();
@@ -96,8 +101,10 @@ namespace UPB.FinalProject.Data
 
         public Quotation UpdateSaleTrue(int id) 
         {
+            //var list = JsonConvert.DeserializeObject<List<Person>>(myJsonString);
             Quotation foundQuotation = QuotationTable.Find(qu => (qu.Id == id));
             foundQuotation.Sale = true;
+
             return foundQuotation;
         }
         public Quotation UpdateSaleFalse(int id)
