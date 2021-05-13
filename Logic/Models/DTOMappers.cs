@@ -18,7 +18,7 @@ namespace UPB.FinalProject.Logic.Models
                     CodClient = quo.CodClient,
                     Quantity = quo.Quantity,
                     Sale = quo.Sale,
-                    Price = quo.Price
+                    //Price = quo.Price
                 });
             }
 
@@ -34,7 +34,7 @@ namespace UPB.FinalProject.Logic.Models
                 CodClient = quo.CodClient,
                 Quantity = quo.Quantity,
                 Sale = quo.Sale,
-                Price = quo.Price
+               // Price = quo.Price
             };
 
             return myLogicQuo;
@@ -50,7 +50,7 @@ namespace UPB.FinalProject.Logic.Models
                 CodClient = quo.CodClient,
                 Quantity = quo.Quantity,
                 Sale = quo.Sale,
-                Price = quo.Price
+                //Price = quo.Price
             };
 
             return myDataQuo;

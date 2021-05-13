@@ -70,7 +70,7 @@ namespace UPB.FinalProject.Logic.Managers
             Book myBook = _priceBookService.GetAllPrices().Result;
             List<Pricing> myPriceBook = myBook.Products;
             List<Data.Models.Quotation> quotations = _dbContext.GetAllQuotations();
-
+            List<Quotation> quots = DTOMappers.MapQuotations(quotations);
 
             Console.Out.WriteLine("=================LISTA DE PRECIOS: ====================");
             foreach (var p in myPriceBook)
@@ -79,7 +79,7 @@ namespace UPB.FinalProject.Logic.Managers
             }
 
             Console.Out.WriteLine("==================LISTA DE COTIZACIONES===================");
-            foreach (var qu in quotations)
+            foreach (var qu in quots)
             {
                 Pricing precioProd = myPriceBook.Find(pr => pr.Code == qu.CodProd);
                 double miPrecio = 0;
@@ -104,10 +104,7 @@ namespace UPB.FinalProject.Logic.Managers
             }
 
             
-
-            
-
-            return DTOMappers.MapQuotations(quotations);
+            return quots;
         }
 
         public Quotation UpdateQuotation(Quotation quo)

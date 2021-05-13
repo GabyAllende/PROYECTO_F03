@@ -36,16 +36,17 @@ namespace PR_F02.Controllers
         {
             return _quotationManager.CreateQuotation(quo);
         }
+        [Route("{quotationId}")]
         [HttpPut]
         public Quotation UpdateQuotation([FromBody] Quotation quo)
         {
             return _quotationManager.UpdateQuotation(quo);
         }
-
+        [Route("{quotationId}")]
         [HttpDelete]
-        public int DeleteQuotation([FromBody] int id)
+        public int DeleteQuotation([FromRoute] int quotationId)
         {
-            return _quotationManager.DeleteQuotation(id);
+            return _quotationManager.DeleteQuotation(quotationId);
         }
 
 
