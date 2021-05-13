@@ -23,7 +23,7 @@ namespace UPB.FinalProject.Logic.Managers
             counter = (int)(_dbContext.GetAllQuotations().Last().Id);
         }
 
-        public Book GetAllPrices()
+        public PricingBook GetAllPrices()
         {
             return _priceBookService.GetAllPrices().Result;
         }
@@ -39,9 +39,9 @@ namespace UPB.FinalProject.Logic.Managers
                 throw new Exception("CodProd NULL o CodClient NULL o Cantidad <= 0");
             }
 
-            Book myBook = _priceBookService.GetAllPrices().Result;
-            List<Pricing> myPriceBook = myBook.Products;
-            Pricing precioProd = myPriceBook.Find(pr => pr.Code == quo.CodProd);
+            PricingBook myBook = _priceBookService.GetAllPrices().Result;
+            List<Product> myPriceBook = myBook.Content;
+            Product precioProd = myPriceBook.Find(pr => pr.ProductId == quo.CodProd);
 
             quo.Id = counter;
             //quo.Price = precioProd != null ? (precioProd.PromotionPrice != 0 ? precioProd.PromotionPrice : precioProd.Price) : 0;
@@ -69,27 +69,27 @@ namespace UPB.FinalProject.Logic.Managers
         public List<Quotation> GetAllQuotations()
         {
            
-            Book myBook = _priceBookService.GetAllPrices().Result;
-            List<Pricing> myPriceBook = myBook.Products;
+            PricingBook myBook = _priceBookService.GetAllPrices().Result;
+            List<Product> myPriceBook = myBook.Content;
             List<Data.Models.Quotation> quotations = _dbContext.GetAllQuotations();
             List<Quotation> quots = DTOMappers.MapQuotations(quotations);
 
             Console.Out.WriteLine("=================LISTA DE PRECIOS: ====================");
             foreach (var p in myPriceBook)
             {
-                Console.WriteLine($"Precio CodProd: {p.Code} SetPrice: {p.Price} PromotionPrice: {p.PromotionPrice}");
+                Console.WriteLine($"Precio CodProd: {p.ProductId} SetPrice: {p.FixedPrice} PromotionPrice: {p.PromotionPrice}");
             }
 
             Console.Out.WriteLine("==================LISTA DE COTIZACIONES===================");
             foreach (var qu in quots)
             {
-                Pricing precioProd = myPriceBook.Find(pr => pr.Code == qu.CodProd);
+                Product precioProd = myPriceBook.Find(pr => pr.ProductId == qu.CodProd);
                 double miPrecio = 0;
                 if (precioProd != null)
                 {
                     if (precioProd.PromotionPrice == 0)
                     {
-                        miPrecio = precioProd.Price;
+                        miPrecio = precioProd.FixedPrice;
                     }
                     else
                     {

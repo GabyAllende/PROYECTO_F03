@@ -6,7 +6,7 @@
             "commandName": "Project",
             "launchBrowser": false,
             "launchUrl": "",
-            "applicationUrl": "http://localhost:5001",
+            "applicationUrl": "http://localhost:5005",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development"
             }
@@ -15,7 +15,7 @@
             "commandName": "Project",
             "launchBrowser": false,
             "launchUrl": "",
-            "applicationUrl": "http://localhost:5001",
+            "applicationUrl": "http://localhost:5005",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "QA"
             }
@@ -24,7 +24,7 @@
             "commandName": "Project",
             "launchBrowser": false,
             "launchUrl": "",
-            "applicationUrl": "http://localhost:5001",
+            "applicationUrl": "http://localhost:5005",
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Production"
             }
