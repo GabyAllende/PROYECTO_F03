@@ -43,7 +43,7 @@ namespace UPB.FinalProject.Logic.Managers
             Pricing precioProd = myPriceBook.Find(pr => pr.Code == quo.CodProd);
 
             quo.Id = counter;
-            quo.Price = precioProd != null ? (precioProd.PromotionPrice != 0 ? precioProd.PromotionPrice : precioProd.Price) : 0;
+            //quo.Price = precioProd != null ? (precioProd.PromotionPrice != 0 ? precioProd.PromotionPrice : precioProd.Price) : 0;
             quo.Sale = false;
 
 
@@ -99,8 +99,8 @@ namespace UPB.FinalProject.Logic.Managers
                     Console.WriteLine($"NO SE ENCONTRO EL CODIGO: {qu.CodProd}");
                 }
 
-                qu.Price = miPrecio;
-                Console.Out.WriteLine($"Id: {qu.Id} CodProd: {qu.CodProd} CodCliente: {qu.CodClient} Price: {qu.Price}");
+                //qu.Price = miPrecio;
+                Console.Out.WriteLine($"Id: {qu.Id} CodProd: {qu.CodProd} CodCliente: {qu.CodClient}" /*Price: {qu.Price}"*/);
             }
 
             

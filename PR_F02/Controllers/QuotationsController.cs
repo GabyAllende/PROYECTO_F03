@@ -19,7 +19,6 @@ namespace PR_F02.Controllers
         private readonly ILogger<QuotationsController> _logger;
 
         public QuotationsController(IConfiguration config, IQuotationManager quotationManager)
-
         {
             _config = config;
             _quotationManager = quotationManager;

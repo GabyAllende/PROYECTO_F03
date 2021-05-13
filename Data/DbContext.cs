@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UPB.FinalProject.Data.Models;
@@ -10,11 +11,13 @@ namespace UPB.FinalProject.Data
     {
         public int cont { get; set; }
 
+        public IConfiguration _config;
         public List<Quotation> QuotationTable { get; set; }
 
         string[] cat = { "SOCCER",  "BASKET" };
-        public DbContext() 
+        public DbContext(IConfiguration config) 
         {
+            _config = config;
             //============CHICOSS AQUI TIENE QUE ESTAR LA CONEXION CON LA BASE DE DATOS JSON==============
             //EL QuotationTable debe estar inicializado con los contenidos de la base de datos
             //Ej
@@ -24,69 +27,48 @@ namespace UPB.FinalProject.Data
             //https://stackoverflow.com/questions/33081102/json-add-new-object-to-existing-json-file-c-sharp/33081258
 
 
-            QuotationTable = new List<Quotation>();
-            Random r = new Random();
-            int est = r.Next(15, 20);
-
-            cont = 0;
-
-            for (int i = 0; i < est; i++)
+            //Obtenemos la direccion del .json con ayuda del _config
+            //Devolvera "C:\\Users\\Acer Aspie 3\\Documents\\CERTIFICACION 1\\PARCIAL 3\\ejemploTest\\PROYECTO_F03\\Data\\Database"
+            string myJsonString = System.IO.File.ReadAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value);
+            var QuotationTable = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Quotation>>(myJsonString);
+            //QuotationTable = new List<Quotation>();
+            foreach (var item in QuotationTable)
             {
-                cont += 1;
-                string med = cont >= 100 ? "" + cont : (cont >= 10 ? "0" + cont : "00" + cont);
-                int numClient = r.Next(1, 1000001);
-                string med2 = numClient >= 1000000 ? "" + numClient : (numClient >= 100000 ? "0" + numClient : (numClient >= 10000 ? "00" + numClient : (numClient >= 1000 ? "000" + numClient : (numClient >= 100 ? "00" + numClient : (numClient >= 10 ? "0" + numClient : "00" + numClient)))));
-                
                 QuotationTable.Add(new Quotation()
                 {
-                    
-                    CodProd = cat[r.Next(0, 2)]+"-"+med,
-                    CodClient = "MTR-"+med2,
-                   Id = cont,
-                   Sale = false,
-                   Quantity = r.Next(0,51)
-                  
-
+                    CodProd = item.CodProd,
+                    CodClient = item.CodClient,
+                    Quantity = item.Quantity,
+                    Sale = item.Sale
                 });
             }
         }
         public Quotation AddQuotation(Quotation quo)
         {
-            
             List<Quotation> matches = QuotationTable.FindAll(qu => (qu.Id == quo.Id ));
             if ( matches.Count > 0)
             {
                 Console.Out.WriteLine($"Ya existe una cotizacion con ese Id: {quo.Id}");
                 throw new Exception($"Ya existe una cotizacion con ese Id: {quo.Id}");
             }
-
-
-
             QuotationTable.Add(quo);
             return quo;
         }
 
         public int DeleteQuotation(int id)
         {
-            
             int deleted = QuotationTable.RemoveAll(quo => quo.Id ==id);
             return deleted;
         }
 
         public List<Quotation> GetAllQuotations()
         {
-
-            
             return QuotationTable;
         }
 
         public Quotation UpdateQuotation(int id , string codProd, int quantity)
         {
-           
             Quotation foundQuotation = QuotationTable.Find(quo => (quo.Id == id ));
-
-            
-
             Console.WriteLine($"Updating CodProd: { foundQuotation.CodProd} CodClient: { foundQuotation.CodClient}");
 
             //foundQuotation.Sale = quoToUpdate.Sale;
@@ -95,7 +77,6 @@ namespace UPB.FinalProject.Data
             foundQuotation.Quantity = quantity;
 
             return foundQuotation;
-
         }
 
 
