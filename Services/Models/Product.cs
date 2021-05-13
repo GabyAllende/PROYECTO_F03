@@ -4,10 +4,10 @@ using System.Text;
 
 namespace UPB.FinalProject.Services.Models
 {
-    public class Pricing
+    public class Product
     {
-        public string Code { get; set; }
-        public double Price { get; set; }
+        public string ProductId { get; set; }
+        public double FixedPrice { get; set; }
         public double PromotionPrice { get; set; }
         public int PricingBookId { get; set; }
 

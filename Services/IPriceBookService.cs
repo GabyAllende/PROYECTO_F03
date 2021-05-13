@@ -8,6 +8,6 @@ namespace UPB.FinalProject.Services
 {
     public interface IPriceBookService
     {
-        public Task<Book> GetAllPrices();
+        public Task<PricingBook> GetAllPrices();
     }
 }
