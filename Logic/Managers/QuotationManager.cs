@@ -100,7 +100,7 @@ namespace UPB.FinalProject.Logic.Managers
                 {
                     Console.WriteLine($"NO SE ENCONTRO EL CODIGO: {qu.CodProd}");
                 }
-
+                qu.Price = miPrecio;
                 //qu.Price = miPrecio;
                 Console.Out.WriteLine($"Id: {qu.Id} CodProd: {qu.CodProd} CodCliente: {qu.CodClient}" /*Price: {qu.Price}"*/);
             }
