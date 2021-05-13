@@ -33,7 +33,7 @@ namespace UPB.FinalProject.Data
 
             //Obtenemos la direccion del .json con ayuda del _config
             //Devolvera "C:\\Users\\Acer Aspie 3\\Documents\\CERTIFICACION 1\\PARCIAL 3\\ejemploTest\\PROYECTO_F03\\Data\\Database"
-            string myJsonString = System.IO.File.ReadAllText(@""+_config.GetSection("ConnectionStrings").GetSection("DBPath").Value);
+            string myJsonString = System.IO.File.ReadAllText(@"C:\\Users\\Lenovo\\Documents\\git\\fffinal\\PROYECTO_F03\\Data\\Database\\quoting.json");
             var quotationTable = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Quotation>>(myJsonString);
             QuotationTable = new List<Quotation>();
             foreach (var item in quotationTable)
@@ -77,7 +77,7 @@ namespace UPB.FinalProject.Data
             //System.IO.File.WriteAllText(Server.MapPath(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value), convertedJson);
             // "C:\Users\Acer Aspie 3\Documents\CERTIFICACION 1\PARCIAL 3\ejemploTest\PROYECTO_F03\Data\Database\quoting.json"
             //System.IO.File.WriteAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value, convertedJson);
-            //System.IO.File.WriteAllText("C:\\Users\\Acer Aspie 3\\Documents\\CERTIFICACION 1\\PARCIAL 3\\ejemploTest\\PROYECTO_F03\\Data\\Database\\quoting.json", convertedJson);
+            System.IO.File.WriteAllText(""+_config.GetSection("ConnectionStrings").GetSection("DBPath").GetSection("Barbe").Value, convertedJson);
 
             return quo;
         }   
@@ -85,7 +85,15 @@ namespace UPB.FinalProject.Data
         public int DeleteQuotation(int id)
         {
             int deleted = QuotationTable.RemoveAll(quo => quo.Id ==id);
+
+            string convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(QuotationTable, Formatting.None);
+            //System.IO.File.WriteAllText(Server.MapPath(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value), convertedJson);
+            // "C:\Users\Acer Aspie 3\Documents\CERTIFICACION 1\PARCIAL 3\ejemploTest\PROYECTO_F03\Data\Database\quoting.json"
+            //System.IO.File.WriteAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value, convertedJson);
+            System.IO.File.WriteAllText("" + _config.GetSection("ConnectionStrings").GetSection("DBPath").GetSection("Barbe").Value, convertedJson);
             return deleted;
+
+
         }
 
         public List<Quotation> GetAllQuotations()
@@ -103,6 +111,8 @@ namespace UPB.FinalProject.Data
             foundQuotation.CodProd = codProd;
             foundQuotation.Quantity = quantity;
 
+            string convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(QuotationTable, Formatting.None);
+            System.IO.File.WriteAllText("" + _config.GetSection("ConnectionStrings").GetSection("DBPath").GetSection("Barbe").Value, convertedJson);
             return foundQuotation;
         }
 
@@ -113,12 +123,18 @@ namespace UPB.FinalProject.Data
             Quotation foundQuotation = QuotationTable.Find(qu => (qu.Id == id));
             foundQuotation.Sale = true;
 
+            string convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(QuotationTable, Formatting.None);
+            System.IO.File.WriteAllText("" + _config.GetSection("ConnectionStrings").GetSection("DBPath").GetSection("Barbe").Value, convertedJson);
+
             return foundQuotation;
         }
         public Quotation UpdateSaleFalse(int id)
         {
             Quotation foundQuotation = QuotationTable.Find(qu => (qu.Id == id));
             foundQuotation.Sale = false;
+
+            string convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(QuotationTable, Formatting.None);
+            System.IO.File.WriteAllText("" + _config.GetSection("ConnectionStrings").GetSection("DBPath").GetSection("Barbe").Value, convertedJson);
             return foundQuotation;
         }
     }
