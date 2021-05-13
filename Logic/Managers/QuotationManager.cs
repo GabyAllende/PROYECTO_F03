@@ -20,16 +20,17 @@ namespace UPB.FinalProject.Logic.Managers
         {
             _dbContext = dbContext;
             _priceBookService = priceBookService;
-            counter = _dbContext.GetAllQuotations().Last().Id;
+            counter = (int)(_dbContext.GetAllQuotations().Last().Id);
         }
 
         public Book GetAllPrices()
         {
             return _priceBookService.GetAllPrices().Result;
         }
-
+        // POST
         public Quotation CreateQuotation(Quotation quo)
         {
+            // serialize
             counter += 1;
 
             if (String.IsNullOrEmpty(quo.CodClient) || String.IsNullOrEmpty(quo.CodProd) || quo.Quantity <= 0 )
@@ -46,12 +47,13 @@ namespace UPB.FinalProject.Logic.Managers
             //quo.Price = precioProd != null ? (precioProd.PromotionPrice != 0 ? precioProd.PromotionPrice : precioProd.Price) : 0;
             quo.Sale = false;
 
-
-
             _dbContext.AddQuotation(DTOMappers.MapGroupLD(quo));
+
+
+
             return quo;
         }
-
+        // DEL
         public int DeleteQuotation(int id)
         {
             if (id<= 0)
@@ -63,7 +65,7 @@ namespace UPB.FinalProject.Logic.Managers
             int deleted = _dbContext.DeleteQuotation(id);
             return deleted;
         }
-
+        // GET
         public List<Quotation> GetAllQuotations()
         {
            
@@ -107,6 +109,7 @@ namespace UPB.FinalProject.Logic.Managers
             return quots;
         }
 
+        // PUT
         public Quotation UpdateQuotation(Quotation quo)
         {
             if (quo.Id<=0 || quo.Quantity <=0 || (String.IsNullOrEmpty(quo.CodProd)))

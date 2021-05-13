@@ -1,5 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Grpc.Core;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Text;
 using UPB.FinalProject.Data.Models;
@@ -18,6 +21,7 @@ namespace UPB.FinalProject.Data
         public DbContext(IConfiguration config) 
         {
             _config = config;
+           
             //============CHICOSS AQUI TIENE QUE ESTAR LA CONEXION CON LA BASE DE DATOS JSON==============
             //EL QuotationTable debe estar inicializado con los contenidos de la base de datos
             //Ej
@@ -29,20 +33,23 @@ namespace UPB.FinalProject.Data
 
             //Obtenemos la direccion del .json con ayuda del _config
             //Devolvera "C:\\Users\\Acer Aspie 3\\Documents\\CERTIFICACION 1\\PARCIAL 3\\ejemploTest\\PROYECTO_F03\\Data\\Database"
-            string myJsonString = System.IO.File.ReadAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value);
-            var QuotationTable = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Quotation>>(myJsonString);
-            //QuotationTable = new List<Quotation>();
-            foreach (var item in QuotationTable)
+            string myJsonString = System.IO.File.ReadAllText(@""+_config.GetSection("ConnectionStrings").GetSection("DBPath").Value);
+            var quotationTable = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Quotation>>(myJsonString);
+            QuotationTable = new List<Quotation>();
+            foreach (var item in quotationTable)
             {
                 QuotationTable.Add(new Quotation()
                 {
+                    Id = item.Id,
                     CodProd = item.CodProd,
                     CodClient = item.CodClient,
                     Quantity = item.Quantity,
                     Sale = item.Sale
                 });
+                Console.Out.WriteLine("Se agrego: \n"+item.Id);
             }
         }
+
         public Quotation AddQuotation(Quotation quo)
         {
             List<Quotation> matches = QuotationTable.FindAll(qu => (qu.Id == quo.Id ));
@@ -51,9 +58,29 @@ namespace UPB.FinalProject.Data
                 Console.Out.WriteLine($"Ya existe una cotizacion con ese Id: {quo.Id}");
                 throw new Exception($"Ya existe una cotizacion con ese Id: {quo.Id}");
             }
+            /*
+            string myJsonString = System.IO.File.ReadAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value);
+            var list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Quotation>>(myJsonString);
+            
+            QuotationTable.Add(new Quotation()
+            {
+                Id = quo.Id,
+                CodProd = quo.CodProd,
+                CodClient = quo.CodClient,
+                Quantity = quo.Quantity,
+                Sale = quo.Sale
+            });
+            */
             QuotationTable.Add(quo);
+            
+            string convertedJson = Newtonsoft.Json.JsonConvert.SerializeObject(QuotationTable, Formatting.None);
+            //System.IO.File.WriteAllText(Server.MapPath(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value), convertedJson);
+            // "C:\Users\Acer Aspie 3\Documents\CERTIFICACION 1\PARCIAL 3\ejemploTest\PROYECTO_F03\Data\Database\quoting.json"
+            //System.IO.File.WriteAllText(_config.GetSection("ConnectionStrings").GetSection("DBPath").Value, convertedJson);
+            //System.IO.File.WriteAllText("C:\\Users\\Acer Aspie 3\\Documents\\CERTIFICACION 1\\PARCIAL 3\\ejemploTest\\PROYECTO_F03\\Data\\Database\\quoting.json", convertedJson);
+
             return quo;
-        }
+        }   
 
         public int DeleteQuotation(int id)
         {
